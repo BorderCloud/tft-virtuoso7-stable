@@ -41,7 +41,7 @@ script:
   -   cd TFT
   -   composer install --dev
 #  -   ls
-  -   php ./tft-testsuite -a -t fuseki -q http://172.17.0.2/test/query -u http://172.17.0.2/test/update -d
+  -   php ./tft-testsuite -a -t fuseki -q http://172.17.0.2/test/query -u http://172.17.0.2/test/update
   -   php ./tft -t fuseki -q http://172.17.0.2/test/query -u http://172.17.0.2/test/update -tt virtuoso -tq http://172.17.0.6:8890/sparql/ -tu http://172.17.0.6:8890/sparql/ -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION} -d
   -   php ./tft-score -t fuseki -q http://172.17.0.6:8890/sparql/ -u http://172.17.0.6:8890/sparql/ -r  ${URI} -d
 
