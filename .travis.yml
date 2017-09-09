@@ -21,26 +21,33 @@ services:
 
 before_install:
   - docker pull bordercloud/tft-jena-fuseki
-  - docker build -t tft_virtuoso7_stable .
+  - docker pull bordercloud/tft_virtuoso7_stable
+#  - docker build -t tft_virtuoso7_stable .
 
 script:
 # Deploy TFT
 # Run RDF database in order to save tests and results
   -   docker run --privileged --name instance.tft_database -d bordercloud/tft-jena-fuseki
-  -   docker run --privileged --name instance.tft.example.org -h example.org -d tft-virtuoso7-stable
-  -   docker run --privileged --name instance.tft.example1.org -h example1.org -d tft-virtuoso7-stable
-  -   docker run --privileged --name instance.tft.example2.org -h example2.org -d tft-virtuoso7-stable
-  -   docker run --privileged --name instance.tft_virtuoso7_stable -h tft_virtuoso7_stable -d tft_virtuoso7_stable
+  -   docker run --privileged --name instance.tft.example.org -h example.org -d bordercloud/tft-virtuoso7-stable
+  -   docker run --privileged --name instance.tft.example1.org -h example1.org -d bordercloud/tft-virtuoso7-stable
+  -   docker run --privileged --name instance.tft.example2.org -h example2.org -d bordercloud/tft-virtuoso7-stable
+  -   docker run --privileged --name instance.tft_virtuoso7_stable -h tft_virtuoso7_stable -d bordercloud/tft-virtuoso7-stable
+#    -   docker run --privileged --name instance.tft_database -d bordercloud/tft-jena-fuseki
+#    -   docker run --privileged --name instance.tft.example.org -h example.org -d tft-virtuoso7-stable
+#    -   docker run --privileged --name instance.tft.example1.org -h example1.org -d tft-virtuoso7-stable
+#    -   docker run --privileged --name instance.tft.example2.org -h example2.org -d tft-virtuoso7-stable
+#    -   docker run --privileged --name instance.tft_virtuoso7_stable -h tft_virtuoso7_stable -d tft_virtuoso7_stable
   -   git clone --recursive https://github.com/BorderCloud/TFT.git
   -   cd TFT
   -   composer install --dev
 #  -   ls
-  -   php ./tft-testsuite -a -t fuseki -q http://172.17.0.2/test/query -u http://172.17.0.2/test/update
-  -   php ./tft -t fuseki -q http://172.17.0.2/test/query -u http://172.17.0.2/test/update -tt virtuoso -tq http://172.17.0.6:8890/sparql/ -tu http://172.17.0.6:8890/sparql/ -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION}
-  -   php ./tft-score -t fuseki -q http://172.17.0.6:8890/sparql/ -u http://172.17.0.6:8890/sparql/ -r  ${URI}
+  -   php ./tft-testsuite -a -t fuseki -q http://172.17.0.2/test/query -u http://172.17.0.2/test/update -d
+  -   php ./tft -t fuseki -q http://172.17.0.2/test/query -u http://172.17.0.2/test/update -tt virtuoso -tq http://172.17.0.6:8890/sparql/ -tu http://172.17.0.6:8890/sparql/ -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION} -d
+  -   php ./tft-score -t fuseki -q http://172.17.0.6:8890/sparql/ -u http://172.17.0.6:8890/sparql/ -r  ${URI} -d
 
-after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
-    docker push bordercloud/tft_virtuoso7_stable;
-    fi
+#after_success:
+#  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+#    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
+#    docker push bordercloud/tft_virtuoso7_stable;
+#    fi
+
