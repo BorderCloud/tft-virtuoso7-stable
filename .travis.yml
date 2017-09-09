@@ -21,7 +21,7 @@ services:
 
 before_install:
   - docker pull bordercloud/tft-jena-fuseki
-  - docker pull bordercloud/tft_virtuoso7_stable
+  - docker pull bordercloud/tft-virtuoso7-stable
 #  - docker build -t tft_virtuoso7_stable .
 
 script:
