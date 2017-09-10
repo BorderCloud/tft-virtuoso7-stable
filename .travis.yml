@@ -9,8 +9,7 @@ notifications:
 env:
   global:
     - URI="https://travis-ci.org/BorderCloud/tft_virtuoso7_stable/builds/$((TRAVIS_JOB_ID - 1))"
-    - NAME="virtuoso-opensource"
-    - SOFTWARE_DESCRIBE="Virtuoso Open-Source Edition"
+    - NAME="Virtuoso Open-Source Edition"
     - VERSION="stable/7"
     - SPARQLSCORE_DATABASE="134.158.74.247"
 
@@ -47,7 +46,7 @@ script:
   -   composer install --dev
 #  -   ls
   -   php ./tft-testsuite -a -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update
-  -   php ./tft -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -tt virtuoso -tq http://172.17.0.2:8890/sparql/ -tu http://172.17.0.2:8890/sparql/ -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION}  --softwareDescribe=${SOFTWARE_DESCRIBE}
+  -   php ./tft -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -tt virtuoso -tq http://172.17.0.2:8890/sparql/ -tu http://172.17.0.2:8890/sparql/ -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION}  --softwareDescribe="${TRAVIS_COMMIT}"
   -   php ./tft-score -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -r  ${URI}
 
 

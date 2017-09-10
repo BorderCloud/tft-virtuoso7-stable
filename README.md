@@ -14,6 +14,6 @@ git clone --recursive https://github.com/BorderCloud/TFT.git
 cd TFT
 composer install --dev
 php ./tft-testsuite -a -t fuseki -q http://172.17.0.2/test/query -u http://172.17.0.2/test/update
-php ./tft -t fuseki -q http://172.17.0.2/test/query -u http://172.17.0.2/test/update -tt virtuoso -tq http://172.17.0.6:8890/sparql/ -tu http://172.17.0.6:8890/sparql/ -r http://test.com/test -o ./junit --softwareName="virtuoso" --softwareDescribeTag="7/stable"
+php ./tft -t fuseki -q http://172.17.0.2/test/query -u http://172.17.0.2/test/update -tt virtuoso -tq http://172.17.0.6:8890/sparql/ -tu http://172.17.0.6:8890/sparql/ -r http://test.com/test -o ./junit --softwareName="virtuoso" --softwareDescribeTag="7/stable" --softwareDescribe="Commit"
 php ./tft-score -t fuseki -q http://172.17.0.2/test/query -u http://172.17.0.2/test/update -r http://test.com/test
 ```
