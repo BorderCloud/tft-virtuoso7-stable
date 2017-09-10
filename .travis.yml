@@ -21,25 +21,25 @@ services:
   - docker
 
 before_install:
-  - docker pull bordercloud/tft-jena-fuseki
-  - docker pull bordercloud/tft-virtuoso7-stable
-#  - docker build -t tft_virtuoso7_stable .
+#  - docker pull bordercloud/tft-jena-fuseki
+#  - docker pull bordercloud/tft-virtuoso7-stable
+  - docker build -t tft-virtuoso7-stable .
 
 script:
 # Deploy TFT
 # Run RDF database in order to save tests and results
-  -   docker run --privileged --name instance.tft_virtuoso7_stable -h tft_virtuoso7_stable -d bordercloud/tft-virtuoso7-stable
-  -   docker run --privileged --name instance.tft.example.org -h example.org -d bordercloud/tft-virtuoso7-stable
-  -   docker run --privileged --name instance.tft.example1.org -h example1.org -d bordercloud/tft-virtuoso7-stable
-  -   docker run --privileged --name instance.tft.example2.org -h example2.org -d bordercloud/tft-virtuoso7-stable
+#  -   docker run --privileged --name instance.tft_virtuoso7_stable -h tft_virtuoso7_stable -d bordercloud/tft-virtuoso7-stable
+#  -   docker run --privileged --name instance.tft.example.org -h example.org -d bordercloud/tft-virtuoso7-stable
+#  -   docker run --privileged --name instance.tft.example1.org -h example1.org -d bordercloud/tft-virtuoso7-stable
+#  -   docker run --privileged --name instance.tft.example2.org -h example2.org -d bordercloud/tft-virtuoso7-stable
+##  -   docker run --privileged --name instance.tft_database -d bordercloud/tft-jena-fuseki
+
+  -   docker run --privileged --name instance.tft-virtuoso7-stable -h tft-virtuoso7-stable -d tft-virtuoso7-stable
+  -   docker run --privileged --name instance.tft.example.org -h example.org -d tft-virtuoso7-stable
+  -   docker run --privileged --name instance.tft.example1.org -h example1.org -d tft-virtuoso7-stable
+  -   docker run --privileged --name instance.tft.example2.org -h example2.org -d tft-virtuoso7-stable
+
 #  -   docker run --privileged --name instance.tft_database -d bordercloud/tft-jena-fuseki
-
-#  -   docker run --privileged --name instance.tft_virtuoso7_stable -h tft_virtuoso7_stable -d tft_virtuoso7_stable
-#  -   docker run --privileged --name instance.tft.example.org -h example.org -d tft-virtuoso7-stable
-#  -   docker run --privileged --name instance.tft.example1.org -h example1.org -d tft-virtuoso7-stable
-#  -   docker run --privileged --name instance.tft.example2.org -h example2.org -d tft-virtuoso7-stable
-
-  -   docker run --privileged --name instance.tft_database -d bordercloud/tft-jena-fuseki
 
   -   git clone --recursive https://github.com/BorderCloud/TFT.git
   -   cd TFT
@@ -50,9 +50,8 @@ script:
   -   php ./tft-score -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -r  ${URI}
 
 
-#after_success:
-#  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-#    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
-#    docker push bordercloud/tft_virtuoso7_stable;
-#    fi
-
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
+    docker push bordercloud/tft-virtuoso7-stable;
+    fi
