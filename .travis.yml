@@ -8,7 +8,7 @@ notifications:
 
 env:
   global:
-    - URI="https://travis-ci.org/BorderCloud/tft-virtuoso7-stable/builds/$((TRAVIS_JOB_ID))"
+    - URI="https://travis-ci.org/BorderCloud/tft-virtuoso7-stable/builds/$((TRAVIS_JOB_ID - 1))"
     - NAME="Virtuoso Open-Source Edition"
     - VERSION="stable/7"
     - SPARQLSCORE_DATABASE="134.158.74.247"
