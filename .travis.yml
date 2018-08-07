@@ -12,6 +12,7 @@ env:
     - NAME="Virtuoso Open-Source Edition"
     - VERSION="stable/7"
     - SPARQLSCORE_DATABASE="134.158.74.247"
+#    - SPARQLSCORE_DATABASE="172.17.0.6" #local
 
 language: php
 php:

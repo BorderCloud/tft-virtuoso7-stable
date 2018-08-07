@@ -41,10 +41,10 @@ php ./tft-testsuite -a -t fuseki -q http://172.17.0.6/test/query \
 php ./tft -t fuseki -q http://172.17.0.6/test/query \
                     -u http://172.17.0.6/test/update \
           -tt virtuoso -tq http://172.17.0.2:8890/sparql/ \
-          -tu http://172.17.0.2:8890/sparql/ \
+                       -tu http://172.17.0.2:8890/sparql/ \
           -r http://example.org/buildid   \
           -o ./junit  \
-          --softwareName="Jena" \
+          --softwareName="Virtuoso" \
           --softwareDescribeTag=X.X.X \
           --softwareDescribe="Name"
                     
