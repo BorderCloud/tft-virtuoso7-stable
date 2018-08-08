@@ -43,7 +43,7 @@ script:
   
 # Run RDF database in order to save tests and results in local (decomment these line and change the variable SPARQLSCORE_DATABASE
 ## 172.17.0.6 for local
-#  -   docker run --privileged --name instance.tft_database -d tft-jena-fuseki
+#  -   docker run --privileged --name instance.tft_database -d bordercloud/tft-jena-fuseki
 
   -   git clone --recursive https://github.com/BorderCloud/TFT.git
   -   cd TFT
