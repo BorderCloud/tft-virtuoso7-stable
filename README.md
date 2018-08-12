@@ -32,6 +32,12 @@ cd TFT
 
 # install SPARQL client
 composer install 
+
+# install JMeter for protocol tests
+wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-4.0.tgz
+tar xvzf apache-jmeter-4.0.tgz 
+mv  apache-jmeter-4.0 jmeter
+rm apache-jmeter-4.0.tgz 
 ```
 
 ### Start tests
