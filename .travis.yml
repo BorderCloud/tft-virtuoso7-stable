@@ -12,7 +12,7 @@ env:
     - NAME="Virtuoso Open-Source Edition"
     - VERSION="stable/7"
     - SPARQLSCORE_DATABASE="134.158.74.247"
-#    - SPARQLSCORE_DATABASE="172.17.0.6" #local
+#    - SPARQLSCORE_DATABASE="172.17.0.6:8080" #local
 
 language: php
 php:
@@ -43,7 +43,7 @@ script:
   
 # Run RDF database in order to save tests and results in local (decomment these line and change the variable SPARQLSCORE_DATABASE
 ## 172.17.0.6 for local
-#  -   docker run --privileged --name instance.tft_database -d bordercloud/tft-jena-fuseki
+#  -   docker run --privileged --name instance.tft-database -d bordercloud/tft-jena-fuseki
 
   -   git clone --recursive https://github.com/BorderCloud/TFT.git
   -   cd TFT
@@ -51,12 +51,12 @@ script:
   -   composer install
 # install JMeter 
   - wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-4.0.tgz
-  - tar xvzf apache-jmeter-4.0.tgz 
+  - tar xzf apache-jmeter-4.0.tgz 
   - mv  apache-jmeter-4.0 jmeter
   - rm apache-jmeter-4.0.tgz 
   
   -   php ./tft-testsuite -a -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update
-  -   php ./tft -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -tt virtuoso -tq http://172.17.0.2:8890/sparql/ -tu http://172.17.0.2:8890/sparql/ -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION}  --softwareDescribe="${TRAVIS_COMMIT}"
+  -   php ./tft -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -tt virtuoso -te http://172.17.0.2/sparql -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION}  --softwareDescribe="${TRAVIS_COMMIT}"
   -   php ./tft-score -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -r  ${URI}
 
 

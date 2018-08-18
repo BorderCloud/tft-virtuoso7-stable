@@ -95,4 +95,27 @@ RUN virtuoso-t -c /data/virtuoso.ini +wait \
 
 EXPOSE 8890
 
+RUN  yum install -y python-docutils automake autoconf libtool ncurses-devel libxslt groff pcre-devel pkgconfig \
+    && cd /tmp \
+	&& wget https://packagecloud.io/install/repositories/varnishcache/varnish60/script.rpm.sh \
+    && chmod +x ./script.rpm.sh \
+    && ./script.rpm.sh \
+    && yum install -y varnish varnish-devel \
+	&& yum clean all
+
+RUN  cd /tmp \
+	&& git clone https://github.com/varnish/varnish-modules.git \
+    && cd varnish-modules \
+    && ./bootstrap  \
+    && ./configure \
+    && make \
+    && make install     
+        
+COPY varnish.params /etc/varnish/varnish.params
+COPY default.vcl /etc/varnish/default.vcl
+
+RUN systemctl enable varnish
+
+EXPOSE 80
+
 CMD ["/usr/sbin/init"]
