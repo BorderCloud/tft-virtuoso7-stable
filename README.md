@@ -34,10 +34,10 @@ cd TFT
 composer install 
 
 # install JMeter for protocol tests
-wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-4.0.tgz
-tar xvzf apache-jmeter-4.0.tgz 
-mv  apache-jmeter-4.0 jmeter
-rm apache-jmeter-4.0.tgz 
+wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-5.2.1.tgz
+tar xzf apache-jmeter-5.2.1.tgz
+mv  apache-jmeter-5.2.1 jmeter
+rm apache-jmeter-5.2.1.tgz 
 ```
 
 ### Start tests

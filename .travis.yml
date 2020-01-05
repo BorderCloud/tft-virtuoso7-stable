@@ -11,12 +11,12 @@ env:
     - URI="https://travis-ci.org/BorderCloud/tft-virtuoso7-stable/builds/$((TRAVIS_JOB_ID - 1))"
     - NAME="Virtuoso Open-Source Edition"
     - VERSION="stable/7"
-    - SPARQLSCORE_DATABASE="134.158.74.247"
-#    - SPARQLSCORE_DATABASE="172.17.0.6:8080" #local
+#    - SPARQLSCORE_DATABASE="134.158.74.247"
+    - SPARQLSCORE_DATABASE="172.17.0.6:8080" #local
 
 language: php
 php:
-  - '7.1'
+  - '7.4'
 
 services:
   - docker
@@ -43,17 +43,17 @@ script:
   
 # Run RDF database in order to save tests and results in local (decomment these line and change the variable SPARQLSCORE_DATABASE
 ## 172.17.0.6 for local
-#  -   docker run --privileged --name instance.tft-database -d bordercloud/tft-jena-fuseki
+  -   docker run --privileged --name instance.tft-database -d bordercloud/tft-jena-fuseki
 
   -   git clone --recursive https://github.com/BorderCloud/TFT.git
   -   cd TFT
 # install SPARQL client 
   -   composer install
 # install JMeter 
-  - wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-4.0.tgz
-  - tar xzf apache-jmeter-4.0.tgz 
-  - mv  apache-jmeter-4.0 jmeter
-  - rm apache-jmeter-4.0.tgz 
+  - wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-5.2.1.tgz
+  - tar xzf apache-jmeter-5.2.1.tgz
+  - mv  apache-jmeter-5.2.1 jmeter
+  - rm apache-jmeter-5.2.1.tgz 
   
   -   php ./tft-testsuite -a -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update
   -   php ./tft -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -tt virtuoso -te http://172.17.0.2/sparql -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION}  --softwareDescribe="${TRAVIS_COMMIT}"
@@ -61,7 +61,7 @@ script:
 
 
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
-    docker push bordercloud/tft-virtuoso7-stable;
-    fi
+#  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+#    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
+#    docker push bordercloud/tft-virtuoso7-stable;
+#    fi

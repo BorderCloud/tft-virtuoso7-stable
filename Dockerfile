@@ -104,7 +104,7 @@ RUN  yum install -y python-docutils automake autoconf libtool ncurses-devel libx
 	&& yum clean all
 
 RUN  cd /tmp \
-	&& git clone https://github.com/varnish/varnish-modules.git \
+	&& git clone --branch 6.0-lts https://github.com/varnish/varnish-modules.git \
     && cd varnish-modules \
     && ./bootstrap  \
     && ./configure \
