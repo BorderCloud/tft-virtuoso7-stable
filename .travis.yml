@@ -45,16 +45,15 @@ script:
   - rm apache-jmeter-5.4.1.tgz
   
   -   php ./tft-testsuite -a -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update
-  -   php ./tft -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -tt virtuoso -te http://172.17.0.2/sparql -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION}  --softwareDescribe="${TRAVIS_COMMIT}"
+  -   php ./tft -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -tt virtuoso -te http://172.18.0.2/sparql -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION}  --softwareDescribe="${TRAVIS_COMMIT}"
   -   php ./tft-score -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -r  ${URI}
 
   -   docker-compose stop
  
 # Save the Docker image
 after_success:
-#  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-#     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin;
-#     docker tag tft-jena-fuseki bordercloud/tft-jena-fuseki:latest ;
-#     docker tag tft-jena-fuseki bordercloud/tft-jena-fuseki:${VERSION} ;
-#    docker push bordercloud/tft-virtuoso7-stable;
-#    fi
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin;
+    docker tag tft-virtuoso7-stable bordercloud/tft-virtuoso7-stable:latest ;
+    docker push bordercloud/tft-virtuoso7-stable;
+    fi
