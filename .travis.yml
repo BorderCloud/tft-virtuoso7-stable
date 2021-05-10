@@ -1,4 +1,9 @@
 sudo: required
+
+language: php
+php:
+  -  7.4.15
+
 notifications:
   email:
     recipients:
@@ -10,58 +15,46 @@ env:
   global:
     - URI="https://travis-ci.org/BorderCloud/tft-virtuoso7-stable/builds/$((TRAVIS_JOB_ID - 1))"
     - NAME="Virtuoso Open-Source Edition"
+    - SOFTWARE_DESCRIBE="Virtuoso is a high-performance and scalable Multi-Model RDBMS, Data Integration Middleware, Linked Data Deployment, and HTTP Application Server Platform"
     - VERSION="stable/7"
 #    - SPARQLSCORE_DATABASE="134.158.74.247"
-    - SPARQLSCORE_DATABASE="172.17.0.6:8080" #local
-
-language: php
-php:
-  - '7.4'
+    - SPARQLSCORE_DATABASE="172.18.0.6:8080" #local
 
 services:
   - docker
 
 before_install:
 # Download docker's images 
-#  - docker pull bordercloud/tft-jena-fuseki
+  - docker pull bordercloud/tft-jena-fuseki:4.0.0
 #  - docker pull bordercloud/tft-virtuoso7-stable
 
 # Compile the docker's project 
   - docker build -t tft-virtuoso7-stable .
+  - sudo docker-compose up -d 
 
 script:
-# Deploy TFT
-
-# 172.17.0.2
-  -   docker run --privileged --name instance.tft-virtuoso7-stable -h tft-virtuoso7-stable -d tft-virtuoso7-stable
-# 172.17.0.3
-  -   docker run --privileged --name instance.tft.example.org -h example.org -d bordercloud/tft-virtuoso7-stable
-# 172.17.0.4
-  -   docker run --privileged --name instance.tft.example1.org -h example1.org -d bordercloud/tft-virtuoso7-stable
-# 172.17.0.5
-  -   docker run --privileged --name instance.tft.example2.org -h example2.org -d bordercloud/tft-virtuoso7-stable
-  
-# Run RDF database in order to save tests and results in local (decomment these line and change the variable SPARQLSCORE_DATABASE
-## 172.17.0.6 for local
-  -   docker run --privileged --name instance.tft-database -d bordercloud/tft-jena-fuseki
-
-  -   git clone --recursive https://github.com/BorderCloud/TFT.git
-  -   cd TFT
+  - sleep 30s
+  - git clone --recursive https://github.com/BorderCloud/TFT.git
+  - cd TFT
 # install SPARQL client 
-  -   composer install
+  - composer install
 # install JMeter 
-  - wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-5.2.1.tgz
-  - tar xzf apache-jmeter-5.2.1.tgz
-  - mv  apache-jmeter-5.2.1 jmeter
-  - rm apache-jmeter-5.2.1.tgz 
+  - wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-5.4.1.tgz
+  - tar xvzf apache-jmeter-5.4.1.tgz
+  - mv  apache-jmeter-5.4.1 jmeter
+  - rm apache-jmeter-5.4.1.tgz
   
   -   php ./tft-testsuite -a -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update
   -   php ./tft -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -tt virtuoso -te http://172.17.0.2/sparql -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION}  --softwareDescribe="${TRAVIS_COMMIT}"
   -   php ./tft-score -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -r  ${URI}
 
-
+  -   docker-compose stop
+ 
+# Save the Docker image
 after_success:
 #  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-#    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
+#     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin;
+#     docker tag tft-jena-fuseki bordercloud/tft-jena-fuseki:latest ;
+#     docker tag tft-jena-fuseki bordercloud/tft-jena-fuseki:${VERSION} ;
 #    docker push bordercloud/tft-virtuoso7-stable;
 #    fi

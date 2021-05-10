@@ -97,21 +97,21 @@ EXPOSE 8890
 
 RUN  yum install -y python-docutils automake autoconf libtool ncurses-devel libxslt groff pcre-devel pkgconfig \
     && cd /tmp \
-	&& wget https://packagecloud.io/install/repositories/varnishcache/varnish60/script.rpm.sh \
+	&& wget https://packagecloud.io/install/repositories/varnishcache/varnish66/script.rpm.sh \
     && chmod +x ./script.rpm.sh \
     && ./script.rpm.sh \
     && yum install -y varnish varnish-devel \
 	&& yum clean all
 
 RUN  cd /tmp \
-	&& git clone --branch 6.0-lts https://github.com/varnish/varnish-modules.git \
+	&& git clone https://github.com/varnish/varnish-modules.git \
     && cd varnish-modules \
     && ./bootstrap  \
     && ./configure \
     && make \
-    && make install     
+    && make install 
         
-COPY varnish.params /etc/varnish/varnish.params
+COPY varnish.service /etc/systemd/system
 COPY default.vcl /etc/varnish/default.vcl
 
 RUN systemctl enable varnish

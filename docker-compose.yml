@@ -1,0 +1,53 @@
+version: "3"
+services:
+  tft-virtuoso7-stable:
+    image: tft-virtuoso7-stable
+    hostname: tft-virtuoso7-stable
+    container_name: instance.tft-virtuoso7-stable
+    privileged: true
+    networks:
+      tft:
+        ipv4_address:  172.18.0.2
+        
+  tft-example:
+    image: bordercloud/tft-virtuoso7-stable
+    hostname: example.org
+    container_name: instance.tft.example.org
+    privileged: true
+    networks:
+      tft:
+        ipv4_address: 172.18.0.3
+        
+  tft-example1:
+    image: bordercloud/tft-virtuoso7-stable
+    hostname: example1.org
+    container_name: instance.tft.example1.org
+    privileged: true
+    networks:
+      tft:
+        ipv4_address: 172.18.0.4
+        
+  tft-example2:
+    image: bordercloud/tft-virtuoso7-stable
+    hostname: example2.org
+    container_name: instance.tft.example2.org
+    privileged: true
+    networks:
+      tft:
+        ipv4_address: 172.18.0.5
+        
+  tft-database:
+    image: tft-jena-fuseki:4.0.0
+    hostname: tft-jena-fuseki
+    container_name: instance.tft-database
+    privileged: true
+    networks:
+      tft:
+        ipv4_address: 172.18.0.6
+        
+networks:
+  tft:
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+
