@@ -7,25 +7,15 @@
 ### Install
 ```
 # Download docker's images 
-docker pull bordercloud/tft-jena-fuseki
+docker pull bordercloud/tft-jena-fuseki:4.0.0
 
 # Compile the docker's project 
 docker build -t tft-virtuoso7-stable .
   
 # Deploy network of SPARQL services
 
-# 172.17.0.2
-docker run --privileged --name instance.tft-virtuoso7-stable -h tft-virtuoso7-stable -d tft-virtuoso7-stable
-# 172.17.0.3
-docker run --privileged --name instance.tft.example.org -h example.org -d bordercloud/tft-virtuoso7-stable
-# 172.17.0.4
-docker run --privileged --name instance.tft.example1.org -h example1.org -d bordercloud/tft-virtuoso7-stable
-# 172.17.0.5
-docker run --privileged --name instance.tft.example2.org -h example2.org -d bordercloud/tft-virtuoso7-stable
-# 172.17.0.6 for local
-docker run --privileged --name instance.tft-database -d bordercloud/tft-jena-fuseki
-
-# docker network inspect bridge
+docker-compose up -d 
+# docker-compose stop
 
 git clone --recursive https://github.com/BorderCloud/TFT.git
 cd TFT
@@ -34,32 +24,31 @@ cd TFT
 composer install 
 
 # install JMeter for protocol tests
-wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-5.2.1.tgz
-tar xzf apache-jmeter-5.2.1.tgz
-mv  apache-jmeter-5.2.1 jmeter
-rm apache-jmeter-5.2.1.tgz 
+wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-5.4.1.tgz
+tar xvzf apache-jmeter-5.4.1.tgz 
+mv  apache-jmeter-5.4.1 jmeter
+rm apache-jmeter-5.4.1.tgz 
 ```
 
 ### Start tests
 Add parameter debug if necessary '-d'
 ```
-php ./tft-testsuite -a -t fuseki -q http://172.17.0.6:8080/test/query \
-                    -u http://172.17.0.6:8080/test/update
-                    
-php ./tft -t fuseki -q http://172.17.0.6:8080/test/query \
-                    -u http://172.17.0.6:8080/test/update \
-          -tt virtuoso -te http://172.17.0.2/sparql \
+php ./tft-testsuite -a -t fuseki -q http://172.18.0.6:8080/test/query \
+                    -u http://172.18.0.6:8080/test/update
+          
+php ./tft -t fuseki -q http://172.18.0.6:8080/test/query \
+                    -u http://172.18.0.6:8080/test/update \
+          -tt virtuoso -te http://172.18.0.2/sparql \
           -r http://example.org/buildid   \
           -o ./junit  \
           --softwareName="Virtuoso" \
           --softwareDescribeTag=X.X.X \
           --softwareDescribe="Name"
                     
-php ./tft-score -t fuseki -q http://172.17.0.6:8080/test/query \
-                          -u http://172.17.0.6:8080/test/update \
+php ./tft-score -t fuseki -q http://172.18.0.6:8080/test/query \
+                          -u http://172.18.0.6:8080/test/update \
                 -r  http://example.org/buildid
 ```
-
 
 # Delete containers of TFT
 
@@ -86,14 +75,15 @@ docker rm $(docker ps -a -q)
 
 # Check the network
 ```
-docker network inspect bridge
+docker network list
+docker network inspect tft-virtuoso7-stable_tft
 ```
 The result has to be :
-instance.tft-virtuoso7-stable " => 172.17.0.2
-instance.tft.example.org => 172.17.0.3
-instance.tft.example1.org => 172.17.0.4
-nstance.tft.example2.org => 172.17.0.5
-instance.tft-database => 172.17.0.6
+* instance.tft-virtuoso7-stable" => 172.18.0.2
+* instance.tft.example.org =>  172.18.0.3
+* instance.tft.example1.org => 172.18.0.4
+* instance.tft.example2.org => 172.18.0.5
+* instance.tft-database =>     172.18.0.6
 
 # Open bash in container
 ```
@@ -136,6 +126,6 @@ systemctl enable varnish
 
 # Logs
 ```
-journalctl -f -u varnish
 journalctl -f -u virtuoso
+journalctl -f -u varnish
 ```
