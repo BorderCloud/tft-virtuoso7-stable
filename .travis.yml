@@ -17,17 +17,13 @@ env:
     - NAME="Virtuoso Open-Source Edition"
     - SOFTWARE_DESCRIBE="Virtuoso is a high-performance and scalable Multi-Model RDBMS, Data Integration Middleware, Linked Data Deployment, and HTTP Application Server Platform"
     - VERSION="stable/7"
-#    - SPARQLSCORE_DATABASE="134.158.74.247"
-    - SPARQLSCORE_DATABASE="172.18.0.6:8080" #local
+    - SPARQLSCORE_DATABASE="134.158.74.239"
+#    - SPARQLSCORE_DATABASE="172.18.0.6:8080" #local
 
 services:
   - docker
 
 before_install:
-# Download docker's images 
-  - docker pull bordercloud/tft-jena-fuseki:4.0.0
-#  - docker pull bordercloud/tft-virtuoso7-stable
-
 # Compile the docker's project 
   - docker build -t tft-virtuoso7-stable .
   - sudo docker-compose up -d 

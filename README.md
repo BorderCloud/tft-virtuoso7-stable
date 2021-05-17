@@ -6,9 +6,6 @@
 
 ### Install
 ```
-# Download docker's images 
-docker pull bordercloud/tft-jena-fuseki:4.0.0
-
 # Compile the docker's project 
 docker build -t tft-virtuoso7-stable .
   
@@ -117,6 +114,7 @@ varnishtest rewriting.vtc
 
 ## Test on server
 ```
+docker exec -it instance.tft-virtuoso7-stable bash
 #varnishd -C -f /etc/varnish/default.vcl
 vi /etc/varnish/default.vcl
 systemctl start varnish
@@ -126,6 +124,6 @@ systemctl enable varnish
 
 # Logs
 ```
-journalctl -f -u virtuoso
+journalctl -f -u virtuoso -n 1000
 journalctl -f -u varnish
 ```

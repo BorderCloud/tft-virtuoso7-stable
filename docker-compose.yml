@@ -8,6 +8,10 @@ services:
     networks:
       tft:
         ipv4_address:  172.18.0.2
+    extra_hosts:
+        - "example.org:172.18.0.3"
+        - "example1.org:172.18.0.4"
+        - "example2.org:172.18.0.5"
         
   tft-example:
     image: tft-virtuoso7-stable
@@ -17,6 +21,9 @@ services:
     networks:
       tft:
         ipv4_address: 172.18.0.3
+    extra_hosts:
+        - "example1.org:172.18.0.4"
+        - "example2.org:172.18.0.5"
         
   tft-example1:
     image: tft-virtuoso7-stable
@@ -26,6 +33,9 @@ services:
     networks:
       tft:
         ipv4_address: 172.18.0.4
+    extra_hosts:
+        - "example.org:172.18.0.3"
+        - "example2.org:172.18.0.5"
         
   tft-example2:
     image: tft-virtuoso7-stable
@@ -35,6 +45,9 @@ services:
     networks:
       tft:
         ipv4_address: 172.18.0.5
+    extra_hosts:
+        - "example.org:172.18.0.3"
+        - "example1.org:172.18.0.4"
         
   tft-database:
     image: bordercloud/tft-jena-fuseki:4.0.0
