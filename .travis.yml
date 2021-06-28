@@ -16,7 +16,7 @@ env:
     - URI="https://travis-ci.org/BorderCloud/tft-virtuoso7-stable/builds/$((TRAVIS_JOB_ID - 1))"
     - NAME="Virtuoso Open-Source Edition"
     - SOFTWARE_DESCRIBE="Virtuoso is a high-performance and scalable Multi-Model RDBMS, Data Integration Middleware, Linked Data Deployment, and HTTP Application Server Platform"
-    - VERSION="stable/7"
+    - VERSION="stable/7.20.3233"
     - SPARQLSCORE_DATABASE="134.158.74.239"
 #    - SPARQLSCORE_DATABASE="172.18.0.6:8080" #local
 
@@ -40,7 +40,7 @@ script:
   - mv  apache-jmeter-5.4.1 jmeter
   - rm apache-jmeter-5.4.1.tgz
   
-  -   php ./tft-testsuite -a -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update
+# only in local -   php ./tft-testsuite -a -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update
   -   php ./tft -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -tt virtuoso -te http://172.18.0.2/sparql -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION}  --softwareDescribe="${TRAVIS_COMMIT}"
   -   php ./tft-score -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -r  ${URI}
 
