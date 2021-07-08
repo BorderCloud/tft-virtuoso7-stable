@@ -27,17 +27,14 @@ jobs:
             distribution: 'adopt'
             java-version: '8'
       - name: Build image docker
-        uses: actions/checkout@v2 
-      - run: >-
-            echo $URI
-#      - run: >-
-#            docker build -t tft-virtuoso7-stable .
-#      - name: Start servers
-#        run: >-
-#            sudo docker-compose up -d
-#      - run: >-
-#            sleep 30s
-      - run: |
+        run: >-
+            docker build -t tft-virtuoso7-stable .
+      - name: Start servers
+        run:  |
+            sudo docker-compose up -d
+            sleep 30s
+      - name: Setup TFT with Jmeter
+        run: |
             git clone --recursive https://github.com/BorderCloud/TFT.git
             cd ./TFT
             composer install
@@ -46,4 +43,13 @@ jobs:
             mv  apache-jmeter-5.4.1 jmeter
             rm apache-jmeter-5.4.1.tgz
             php -version
-            
+      - name: Execute tests
+        run: |
+               php ./tft -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -tt virtuoso -te http://172.18.0.2/sparql -r ${URI} -o ./junit --softwareName="${NAME}" --softwareDescribeTag=${VERSION}  --softwareDescribe="${TRAVIS_COMMIT}"
+      - name: Read result
+        run: |
+            php ./tft-score -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update -r  ${URI}
+      - name: Stop servers
+        run:  |
+          docker-compose stop
+          
