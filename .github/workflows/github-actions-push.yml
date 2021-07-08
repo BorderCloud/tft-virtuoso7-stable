@@ -5,8 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build image docker
-        
+      - name: Build image docker 6.2.7.2
        env:
         SOME_ENV_VAR_NAME: testEnv
       - run: >-
