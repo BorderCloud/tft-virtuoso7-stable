@@ -22,7 +22,7 @@ jobs:
             php-version: '7.4'
             tools: composer
       - name: Setup Java
-        uses: uses: actions/setup-java@v2
+        uses: actions/setup-java@v2
         with:
             distribution: 'adopt'
             java-version: '8'
