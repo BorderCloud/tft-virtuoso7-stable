@@ -4,10 +4,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Build image docker 6.2.7.2
-       env:
-        SOME_ENV_VAR_NAME: testEnv
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Build image docker
+        env:
+          SOME_ENV_VAR_NAME: testEnv
       - run: >-
             echo ${SOME_ENV_VAR_NAME}
       - run: >-
@@ -31,32 +32,6 @@ jobs:
             mv  apache-jmeter-5.4.1 jmeter
       - run: >-
             rm apache-jmeter-5.4.1.tgz
- 
-#      - run: >-
-          #php ./tft -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u
-          #http://${SPARQLSCORE_DATABASE}/test/update -tt virtuoso -te
-          #http://172.18.0.2/sparql -r ${URI} -o ./junit --softwareName="${NAME}"
-          #--softwareDescribeTag=${VERSION} 
-          #--softwareDescribe="${TRAVIS_COMMIT}"
-      #- run: >-
-          #php ./tft-score -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query
-          #-u http://${SPARQLSCORE_DATABASE}/test/update -r  ${URI}
-      #- run: docker-compose stop
-      #- run: >-
-          #if [ "$TRAVIS_BRANCH" == "master" ]; then echo "$DOCKER_PASSWORD" |
-          #docker login -u "$DOCKER_USERNAME" --password-stdin; docker tag
-          #tft-virtuoso7-stable bordercloud/tft-virtuoso7-stable:latest ; docker
-          #push bordercloud/tft-virtuoso7-stable; fi
-    
-    
-    
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: >-
+            php -version
+            
