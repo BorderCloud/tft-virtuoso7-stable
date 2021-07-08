@@ -4,9 +4,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
       - name: Build image docker
+        uses: actions/checkout@v2
         env:
           SOME_ENV_VAR_NAME: testEnv
       - run: >-
