@@ -24,8 +24,7 @@ jobs:
       - run: >-
             composer install
       - run: >-
-             wget
-          http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-5.4.1.tgz
+             wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-5.4.1.tgz
       - run: >-
             tar xvzf apache-jmeter-5.4.1.tgz
       - run: >-
