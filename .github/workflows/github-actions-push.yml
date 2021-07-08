@@ -2,7 +2,7 @@ name: Build docker
 on: push
 
 env:
-    URI: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+    URI: ${{env.GITHUB_SERVER_URL}}/${{env.GITHUB_REPOSITORY}}/actions/runs/${{env.GITHUB_RUN_ID}}            
     NAME: "Virtuoso Open-Source Edition"
     SOFTWARE_DESCRIBE: Virtuoso is a high-performance and scalable Multi-Model RDBMS, Data Integration Middleware, Linked Data Deployment, and HTTP Application Server Platform"
     VERSION: "stable/7.20.3233"
@@ -37,20 +37,13 @@ jobs:
 #            sudo docker-compose up -d
 #      - run: >-
 #            sleep 30s
-      - run: >-
+      - run: |
             git clone --recursive https://github.com/BorderCloud/TFT.git
-      - run: >-
-            cd TFT
-      - run: >-
+            cd ./TFT
             composer install
-      - run: >-
-             wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-5.4.1.tgz
-      - run: >-
+            wget http://mirrors.standaloneinstaller.com/apache//jmeter/binaries/apache-jmeter-5.4.1.tgz
             tar xvzf apache-jmeter-5.4.1.tgz
-      - run: >-
             mv  apache-jmeter-5.4.1 jmeter
-      - run: >-
             rm apache-jmeter-5.4.1.tgz
-      - run: >-
             php -version
             
