@@ -13,7 +13,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup PHP
@@ -54,4 +53,10 @@ jobs:
       - name: Stop servers
         run:  |
           docker-compose stop
-          
+#  publish:
+#    name: Save the Docker image
+#    if: ${{ github.ref == 'master' }}
+#    needs: test
+#    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin;
+#    docker tag tft-virtuoso7-stable bordercloud/tft-virtuoso7-stable:latest ;
+#    docker push bordercloud/tft-virtuoso7-stable;
