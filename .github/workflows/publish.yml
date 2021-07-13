@@ -1,11 +1,18 @@
 name: Publish
 
-# Only trigger, when the build workflow succeeded
-on:
-  workflow_run:
-    workflows: ["Test"]
-    types:
-      - completed
+# REFRESH THE VERSION NUMBER BEFORE TO START THIS WORKFLOW
+
+# Only trigger, when the test workflow succeeded
+#on:
+  #workflow_run:
+    #workflows: ["Test"]
+    #types:
+      #- completed
+      
+on: workflow_dispatch
+
+env:
+    VERSION: "7.20.3233" 
       
 jobs:
   push_to_registry:
