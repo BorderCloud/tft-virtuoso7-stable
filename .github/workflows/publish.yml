@@ -42,7 +42,7 @@ jobs:
           push: true
           tags: |
             bordercloud/tft-virtuoso7-stable:latest
-            bordercloud/tft-virtuoso7-stable:${VERSION}
+            bordercloud/tft-virtuoso7-stable:${{env.VERSION}}
       -
         name: Push README to Dockerhub
         uses: christian-korneck/update-container-description-action@v1
