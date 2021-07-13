@@ -116,7 +116,7 @@ COPY default.vcl /etc/varnish/default.vcl
 
 RUN systemctl enable varnish
 
-RUN virtuoso-t -v
+RUN virtuoso-t -h || (exit 0)
 
 EXPOSE 80
 

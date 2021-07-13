@@ -12,7 +12,7 @@ name: Publish
 on: workflow_dispatch
 
 env:
-    VERSION: "7.20.3233" 
+    VERSION: "7.2.6.3233" 
       
 jobs:
   push_to_registry:
@@ -40,7 +40,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: bordercloud/tft-virtuoso7-stable:latest
+          tags: |
+            bordercloud/tft-virtuoso7-stable:latest
+            bordercloud/tft-virtuoso7-stable:${VERSION}
       -
         name: Push README to Dockerhub
         uses: christian-korneck/update-container-description-action@v1
