@@ -1,4 +1,4 @@
-[![Test](https://github.com/BorderCloud/tft-virtuoso7-stable/actions/workflows/test.yml/badge.svg)](https://github.com/BorderCloud/tft-virtuoso7-stable/actions/workflows/test.yml) [![SPARQLScore](https://github.com/BorderCloud/tft-virtuoso7-stable/actions/workflows/test.yml/badge.svg)](http://sparqlscore.com/) [![Publish](https://github.com/BorderCloud/tft-virtuoso7-stable/actions/workflows/publish.yml/badge.svg)](https://github.com/BorderCloud/tft-virtuoso7-stable/actions/workflows/publish.yml)
+[![Test](https://github.com/BorderCloud/tft-virtuoso7-stable/actions/workflows/test.yml/badge.svg)](https://github.com/BorderCloud/tft-virtuoso7-stable/actions/workflows/test.yml) ([SPARQLScore](http://sparqlscore.com/)) [![Publish](https://github.com/BorderCloud/tft-virtuoso7-stable/actions/workflows/publish.yml/badge.svg)](https://github.com/BorderCloud/tft-virtuoso7-stable/actions/workflows/publish.yml)
 
 # tft-virtuoso7-stable : Virtuoso 7 stable 
 
