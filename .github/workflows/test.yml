@@ -6,7 +6,7 @@ on: workflow_dispatch
 
 env:
     NAME: "Virtuoso Open-Source Edition"
-    SOFTWARE_DESCRIBE: Virtuoso is a high-performance and scalable Multi-Model RDBMS, Data Integration Middleware, Linked Data Deployment, and HTTP Application Server Platform"
+    SOFTWARE_DESCRIBE: "Virtuoso is a high-performance and scalable Multi-Model RDBMS, Data Integration Middleware, Linked Data Deployment, and HTTP Application Server Platform"
     VERSION: "stable/7.2.6.3233" 
     SPARQLSCORE_DATABASE: "134.158.74.239"
 #       SPARQLSCORE_DATABASE="172.18.0.6:8080" #local
@@ -46,6 +46,10 @@ jobs:
             mv  apache-jmeter-5.4.1 jmeter
             rm apache-jmeter-5.4.1.tgz
             php -version
+      #- name: Import tests
+        #run: |
+            #cd ./TFT
+            #php ./tft-testsuite -a -t fuseki -q http://${SPARQLSCORE_DATABASE}/test/query -u http://${SPARQLSCORE_DATABASE}/test/update
       - name: Execute tests
         run: |
             cd ./TFT
